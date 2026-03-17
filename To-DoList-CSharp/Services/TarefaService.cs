@@ -41,34 +41,41 @@ namespace To_DoList_CSharp.Services
             tarefas.Add(tarefa);
             SalvarTarefas();
 
-            Console.WriteLine("Tarefa criada com sucesso!");
+            Console.WriteLine("\nTarefa criada com sucesso!");
 
         }
 
         public void ListarTarefa()
         {
-            foreach (Tarefa t in tarefas)
-            {
-                string status = t.Concluida ? "✔" : "❌";
+            if (tarefas.Count == 0)
+                Console.WriteLine("\nNenhuma tarefa encontrada!");
 
-                Console.WriteLine("==========================================");
-                Console.WriteLine($"ID: {t.Id}");
-                Console.WriteLine($"Título: {t.Titulo}");
-                Console.WriteLine($"Descrição: {t.Descricao}");
-                Console.WriteLine($"Concluida: {status}");
-                Console.WriteLine($"Criada em {t.DataCriacao}");
-                Console.WriteLine("==========================================");
+            else
+            {
+                foreach (Tarefa t in tarefas)
+                {
+                    string status = t.Concluida ? "Sim" : "Não";
+
+                    Console.WriteLine("==========================================");
+                    Console.WriteLine($"ID: {t.Id}");
+                    Console.WriteLine($"Título: {t.Titulo}");
+                    Console.WriteLine($"Descrição: {t.Descricao}");
+                    Console.WriteLine($"Concluida: {status}");
+                    Console.WriteLine($"Criada em {t.DataCriacao}");
+                    Console.WriteLine("==========================================");
+                }
             }
+           
         }
 
         public void ConcluirTarefa()
         {
-            Console.Write("Digite o ID da Tarefa para Concluí-lá: ");
+            Console.Write("\nDigite o ID da Tarefa para Concluí-lá: ");
             int id;
             while (!int.TryParse(Console.ReadLine(), out id) || id < 0)
             {
-                Console.WriteLine("Erro! Digite um número inteiro maior ou igual a zero.");
-                Console.Write("Tente novamente: ");
+                Console.WriteLine("\nErro! Digite um ID válido!");
+                Console.Write("Digite o ID da Tarefa para Concluí-lá: ");
             }
 
 
@@ -78,21 +85,21 @@ namespace To_DoList_CSharp.Services
             {
                 tarefa.Concluida = true;
                 SalvarTarefas();
-                Console.WriteLine($"Tarefa: {tarefa.Titulo} foi concluida com sucesso!");
+                Console.WriteLine($"\nTarefa: {tarefa.Titulo} foi concluida com sucesso!");
             }
 
-            else Console.WriteLine("Tarefa não encontrada, tente novamente!");
+            else Console.WriteLine("\nTarefa não encontrada, tente novamente!");
 
 
         }
 
         public void DeletarTarefa()
         {
-            Console.Write("Digite o ID da tarefa a ser deletada: ");
+            Console.Write("\nDigite o ID da tarefa a ser deletada: ");
             int id;
             while (!int.TryParse(Console.ReadLine(), out id) || id < 0)
             {
-                Console.WriteLine("Erro! Digite um ID válido!");
+                Console.WriteLine("\nErro! Digite um ID válido!");
                 Console.Write("Tente novamente: ");
             }
 
@@ -100,8 +107,8 @@ namespace To_DoList_CSharp.Services
 
             if (tarefa != null)
             {
-                Console.WriteLine($"Tarefa encontrada:");
-                string status = tarefa.Concluida ? "✔" : "❌";
+                Console.WriteLine($"\nTarefa encontrada:");
+                string status = tarefa.Concluida ? "Sim" : "Não";
 
                 Console.WriteLine("==========================================");
                 Console.WriteLine($"ID: {tarefa.Id}");
@@ -111,11 +118,11 @@ namespace To_DoList_CSharp.Services
                 Console.WriteLine($"Criada em {tarefa.DataCriacao}");
                 Console.WriteLine("==========================================");
 
-                Console.WriteLine($"Tem certeza que deseja excluir '{tarefa.Titulo}'? (s / n): ");
+                Console.WriteLine($"\nTem certeza que deseja excluir a tarefa: '{tarefa.Titulo}'? (s / n): ");
                 string decisao = Console.ReadLine().ToLower();
                 while (decisao != "s" && decisao != "n")
                 {
-                    Console.WriteLine("Opção INVÁLIDA!");
+                    Console.WriteLine("\nOpção INVÁLIDA!");
                     Console.WriteLine("##### Digite 's' para SIM e 'n' para NÃO ##### ");
                     Console.WriteLine("Tem certeza que deseja excluir? (s / n): ");
                     decisao = Console.ReadLine().ToLower();
@@ -126,15 +133,15 @@ namespace To_DoList_CSharp.Services
                 {
                     tarefas.Remove(tarefa);
                     SalvarTarefas();
-                    Console.WriteLine("Tarefa excluída com sucesso!");
+                    Console.WriteLine("\nTarefa excluída com sucesso!");
                 } 
 
                 else
                 {
-                    Console.WriteLine("Exclusão Cancelada!");
+                    Console.WriteLine("\nExclusão Cancelada!");
                 }
 
-            }   else Console.WriteLine("Tarefa não encontrada!");
+            }   else Console.WriteLine("\nTarefa não encontrada!");
         }
 
 
